@@ -27,16 +27,36 @@ export default class App extends React.Component {
     })
   }
 
+  clickCompleted = (id) => {
+    axios.patch(`${URL}/${id}`)
+    .then(res => {  
+      console.log(res.data.data);
+      this.setState({
+        ...this.state,
+        data: this.state.data.map(item => {
+          if (id === item.id) {
+            return res.data.data
+          } else {
+            return item
+          }
+        })
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   componentDidMount() {
     return this.getData()
   }
 
   render() {
-    console.log(this.state.data)
+    // console.log(this.state.data)
     return (
       <div className='App'>
         <h1>Todos:</h1>
-        <TodoList todos={this.state.data} />
+        <TodoList clickCompleted={this.clickCompleted} todos={this.state.data} />
       </div>
     )
   }
