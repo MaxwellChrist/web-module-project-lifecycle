@@ -4,6 +4,8 @@ const URL = 'http://localhost:9000/api/todos'
 
 export default class App extends React.Component {
   render() {
-    return null
+    return (
+      <h1>Honey I'm Home!</h1>
+    )
   }
 }
