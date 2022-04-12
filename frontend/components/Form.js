@@ -10,7 +10,7 @@ export default class Form extends React.Component {
         value={this.props.initialName}
         onChange={this.props.handleChange}
       />
-      <button>Add</button>
+      <button>Submit</button>
     </form>
     )
   }

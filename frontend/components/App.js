@@ -13,6 +13,7 @@ export default class App extends React.Component {
       data: [],
       initialName: "",
       initialCompleted: false,
+      initialError: "no error :)",
     }
   }
 
@@ -20,7 +21,7 @@ export default class App extends React.Component {
     const goal = event.target.value
     this.setState({
       ...this.state,
-      initialName: goal
+      initialName: goal,
     })
     // console.log(this.state.initialName)
   }
@@ -53,7 +54,11 @@ export default class App extends React.Component {
       })
     })
     .catch(err => {
-      console.log(err)
+      console.log(err.message)
+      this.setState({
+        ...this.state,
+        initialError: err.message,
+      })
     })
   }
 
@@ -97,6 +102,7 @@ export default class App extends React.Component {
     // console.log(this.state.data)
     return (
       <div className='App'>
+        <h4 className="displayError">Error {this.state.initialError}</h4>
         <h1>Todos:</h1>
         <TodoList clickCompleted={this.clickCompleted} todos={this.state.data} />
         <Form addItem={this.addItem} 
