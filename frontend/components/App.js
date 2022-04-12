@@ -77,6 +77,18 @@ export default class App extends React.Component {
     })
   }
 
+  hide = () => {
+    console.log(this.state.data)
+    this.setState({
+      ...this.state,
+      data: this.state.data.filter(item => {
+        return (
+          item.completed ? "" : item
+        )
+      })
+    })
+  }
+
   componentDidMount() {
     return this.getData()
   }
@@ -91,6 +103,7 @@ export default class App extends React.Component {
           handleChange={this.handleChange} 
           initialName={this.state.initialName}
         />
+        <button onClick={this.hide}>Hide Completed</button>
       </div>
     )
   }
