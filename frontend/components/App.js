@@ -11,7 +11,37 @@ export default class App extends React.Component {
     super();
     this.state = {
       data: [],
+      initialName: "",
+      initialCompleted: false,
     }
+  }
+
+  handleChange = event => {
+    const goal = event.target.value
+    this.setState({
+      ...this.state,
+      initialName: goal
+    })
+    // console.log(this.state.initialName)
+  }
+  
+
+  addItem = (e) => {
+    e.preventDefault()
+    axios.post(URL, {
+      name: this.state.initialName
+    })
+    .then(res => {
+      console.log("post request:", res)
+      this.setState({
+        ...this.state,
+        data: [...this.state.data, res.data.data],
+        initialName: "",
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   getData = (e) => {
@@ -57,6 +87,10 @@ export default class App extends React.Component {
       <div className='App'>
         <h1>Todos:</h1>
         <TodoList clickCompleted={this.clickCompleted} todos={this.state.data} />
+        <Form addItem={this.addItem} 
+          handleChange={this.handleChange} 
+          initialName={this.state.initialName}
+        />
       </div>
     )
   }
